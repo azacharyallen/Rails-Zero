@@ -2,10 +2,7 @@ require 'uri'
 require 'addressable/uri'
 
 class Params
-  # use your initialize to merge params from
-  # 1. query string
-  # 2. post body
-  # 3. route params
+  # Merge params from query string, body, route
   attr_reader :params
   def initialize(req, route_params = {})
     @params = route_params
@@ -37,11 +34,7 @@ class Params
   class AttributeNotFoundError < ArgumentError; end;
 
   private
-  # this should return deeply nested hash
-  # argument format
-  #   
-  # should return
-  # { "user" => { "address" => { "street" => "main", "zip" => "89436" } } }
+  # Parses query string into nested hash
   def parse_www_encoded_form(www_encoded_form)
     query_string = www_encoded_form
     #
@@ -51,15 +44,12 @@ class Params
     end
   end
 
-  # this should return an array
-  # user[address][street] should return ['user', 'address', 'street']
+  # Returns nested hash of a key
   def parse_key(key_value_string)
     key, value = key_value_string.split("=")
     top_key = key.scan(/^\w+/).first
     nested_keys = key.scan(/\[(\w+)\]/).flatten
     nested_keys.unshift top_key
-
-    #p "Key: #{key}, Value: #{value}"
 
     base = @params
     until nested_keys.length == 1 do

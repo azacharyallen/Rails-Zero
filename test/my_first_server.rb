@@ -12,16 +12,3 @@ end
 trap('INT') { server.shutdown }
 
 server.start
-
-# template = <<-ERB
-# Your number is: <%= x %>
-# The square of your number is <%= x * x %>
-# ERB
-
-# compiled_template = ERB.new(template)
-
-# x = 4
-
-# b = binding()
-
-# puts compiled_template.result(b)
